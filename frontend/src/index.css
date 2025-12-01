@@ -1,0 +1,99 @@
+@import "tailwindcss";
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  min-height: 100vh;
+}
+
+.board-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.chess-board {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  grid-template-rows: repeat(8, 1fr);
+  border: 3px solid #2d3436;
+  border-radius: 2px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+  aspect-ratio: 1 / 1;
+}
+
+.chess-board::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  border-radius: inherit;
+  box-shadow: inherit;
+  pointer-events: none;
+}
+
+.square {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--piece-size, 3rem);
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+  position: relative;
+  aspect-ratio: 1 / 1;
+}
+
+.square.light { background: #f0d9b5; }
+.square.dark { background: #b58863; }
+.square.selected { background: #7fc97f !important; }
+.square.legal-move::after {
+  content: '';
+  position: absolute;
+  width: 30%;
+  height: 30%;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 50%;
+}
+.square.legal-capture { background: rgba(255, 0, 0, 0.4) !important; }
+.square.last-move { background: rgba(255, 255, 0, 0.4) !important; }
+.square:hover { opacity: 0.9; }
+
+.piece { user-select: none; pointer-events: none; }
+
+/* Resize handle - lichess style */
+.cg-resize {
+  display: block;
+  position: absolute;
+  right: -10px;
+  bottom: -10px;
+  width: 20px;
+  height: 20px;
+  cursor: nwse-resize;
+  z-index: 10;
+  background: transparent;
+}
+
+.cg-resize::before {
+  content: '';
+  position: absolute;
+  right: 3px;
+  bottom: 3px;
+  width: 10px;
+  height: 10px;
+  border-right: 2px solid rgba(255, 255, 255, 0.4);
+  border-bottom: 2px solid rgba(255, 255, 255, 0.4);
+}
+
+.cg-resize:hover::before {
+  border-color: rgba(255, 255, 255, 0.7);
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+.thinking { animation: pulse 1s infinite; }
