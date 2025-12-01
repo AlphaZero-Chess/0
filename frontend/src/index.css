@@ -1,0 +1,52 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  min-height: 100vh;
+}
+
+.chess-board {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  border: 4px solid #2d3436;
+  border-radius: 4px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+}
+
+.square {
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  position: relative;
+}
+
+.square.light { background: #f0d9b5; }
+.square.dark { background: #b58863; }
+.square.selected { background: #7fc97f !important; }
+.square.legal-move::after {
+  content: '';
+  position: absolute;
+  width: 30%;
+  height: 30%;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 50%;
+}
+.square.legal-capture { background: rgba(255, 0, 0, 0.4) !important; }
+.square.last-move { background: rgba(255, 255, 0, 0.4) !important; }
+.square:hover { opacity: 0.85; }
+
+.piece { user-select: none; pointer-events: none; }
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+.thinking { animation: pulse 1s infinite; }
